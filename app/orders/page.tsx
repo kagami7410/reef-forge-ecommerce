@@ -1,13 +1,14 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Order } from '@/lib/supabase';
 import { useCart } from '@/context/CartContext';
 import styles from './page.module.css';
 
-export default function OrdersPage() {
+// Component that uses useSearchParams - must be wrapped in Suspense
+function OrdersContent() {
   const { user, loading: authLoading } = useAuth();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -186,5 +187,18 @@ export default function OrdersPage() {
         ))}
       </div>
     </div>
+  );
+}
+
+// Main component with Suspense boundary
+export default function OrdersPage() {
+  return (
+    <Suspense fallback={
+      <div className={styles.ordersPage}>
+        <div className={styles.loading}>Loading your orders...</div>
+      </div>
+    }>
+      <OrdersContent />
+    </Suspense>
   );
 }
