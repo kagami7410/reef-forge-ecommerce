@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(findstr:*)",
+      "Bash(openssl rand:*)",
+      "Bash(npm install:*)",
+      "Bash(npm run dev:*)",
+      "Bash(npm uninstall:*)",
+      "Bash(netstat:*)",
+      "Bash(taskkill:*)",
+      "Bash(cat:*)",
+      "Bash(/dev/null --include=\"*.ts\" --include=\"*.tsx\" -l)",
+      "Bash(echo:*)",
+      "Bash(del \"components\\\\CheckoutModal.tsx\")",
+      "Bash(del \"components\\\\CheckoutModal.module.css\")",
+      "Bash(del \"tailwind.config.ts\")"
+    ]
+  }
+}
