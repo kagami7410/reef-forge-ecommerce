@@ -77,7 +77,7 @@ export function middleware(request: NextRequest) {
 
     // Cleanup old entries (1% chance per request to avoid overhead)
     if (Math.random() < 0.01) {
-      for (const [key, value] of rateLimit.entries()) {
+      for (const [key, value] of Array.from(rateLimit.entries())) {
         if (value.resetTime < now) {
           rateLimit.delete(key);
         }

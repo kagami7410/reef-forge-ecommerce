@@ -14,7 +14,9 @@
       "Bash(del \"components\\\\CheckoutModal.tsx\")",
       "Bash(del \"components\\\\CheckoutModal.module.css\")",
       "Bash(del \"tailwind.config.ts\")",
-      "Bash(npm run build:*)"
+      "Bash(npm run build:*)",
+      "Bash(npx next build:*)",
+      "Bash(npx tsc:*)"
     ]
   }
 }

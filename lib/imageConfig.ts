@@ -34,7 +34,9 @@ export function getImageUrl(
   imagePath: string,
   transformations?: string
 ): string {
-  switch (CDN_PROVIDER) {
+  const provider = CDN_PROVIDER as 'cloudinary' | 'imgur' | 's3' | 'local';
+
+  switch (provider) {
     case 'cloudinary':
       const { cloudName, folder } = CDN_CONFIG.cloudinary;
       const baseUrl = `https://res.cloudinary.com/${cloudName}/image/upload`;
@@ -42,9 +44,7 @@ export function getImageUrl(
       // imagePath can include subfolders like "subfolder/image.jpg"
       const path = `${imagePath}`;
       return `${baseUrl}/${path}`;
- 
 
-      
     case 'imgur':
       return `${CDN_CONFIG.imgur.baseUrl}/${imagePath}`;
 

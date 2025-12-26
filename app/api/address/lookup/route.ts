@@ -12,6 +12,7 @@ interface AddressComponent {
 interface GeocodeResult {
   address_components: AddressComponent[];
   formatted_address: string;
+  place_id?: string;
   geometry: {
     location: {
       lat: number;
@@ -26,6 +27,15 @@ interface PlaceResult {
   vicinity?: string;
   formatted_address?: string;
   address_components?: AddressComponent[];
+}
+
+interface ParsedAddress {
+  formatted_address: string;
+  address_line1: string;
+  city: string;
+  county: string;
+  postcode: string;
+  place_id: string;
 }
 
 export async function POST(request: NextRequest) {
@@ -104,7 +114,8 @@ export async function POST(request: NextRequest) {
     if (!placesData.results || placesData.results.length === 0) {
       const geocodeAddress = parseAddressComponents(
         geocodeData.results[0].address_components,
-        formattedPostcode
+        formattedPostcode,
+        geocodeData.results[0].place_id || ''
       );
 
       if (geocodeAddress) {
@@ -121,10 +132,10 @@ export async function POST(request: NextRequest) {
 
     // Step 3: Parse the addresses from Places API results
     const addresses = placesData.results
-      .map((place: PlaceResult) => {
+      .map((place: PlaceResult): ParsedAddress | null => {
         // Try to get address components from the place
         if (place.address_components && place.address_components.length > 0) {
-          return parseAddressComponents(place.address_components, formattedPostcode);
+          return parseAddressComponents(place.address_components, formattedPostcode, place.place_id);
         }
 
         // Fallback: use the formatted_address or vicinity
@@ -144,16 +155,16 @@ export async function POST(request: NextRequest) {
           place_id: place.place_id,
         };
       })
-      .filter((addr) => addr !== null && addr.address_line1.length > 0);
+      .filter((addr: ParsedAddress | null): addr is ParsedAddress => addr !== null && addr.address_line1.length > 0);
 
     // Remove duplicates based on address_line1
     const uniqueAddresses = addresses.filter(
-      (addr, index, self) =>
-        index === self.findIndex((a) => a.address_line1 === addr.address_line1)
+      (addr: ParsedAddress, index: number, self: ParsedAddress[]) =>
+        index === self.findIndex((a: ParsedAddress) => a.address_line1 === addr.address_line1)
     );
 
     // Sort addresses by street number if present
-    const sortedAddresses = uniqueAddresses.sort((a, b) => {
+    const sortedAddresses = uniqueAddresses.sort((a: ParsedAddress, b: ParsedAddress) => {
       const numA = parseInt(a.address_line1.match(/^\d+/)?.[0] || '999999');
       const numB = parseInt(b.address_line1.match(/^\d+/)?.[0] || '999999');
       return numA - numB;
@@ -183,14 +194,9 @@ export async function POST(request: NextRequest) {
  */
 function parseAddressComponents(
   components: AddressComponent[],
-  postcode: string
-): {
-  formatted_address: string;
-  address_line1: string;
-  city: string;
-  county: string;
-  postcode: string;
-} | null {
+  postcode: string,
+  placeId: string = ''
+): ParsedAddress | null {
   const streetNumber =
     components.find((comp) => comp.types.includes('street_number'))?.long_name || '';
 
@@ -224,5 +230,6 @@ function parseAddressComponents(
     city: city,
     county: county,
     postcode: postcode,
+    place_id: placeId,
   };
 }
