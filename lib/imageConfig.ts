@@ -42,7 +42,9 @@ export function getImageUrl(
       // imagePath can include subfolders like "subfolder/image.jpg"
       const path = `${imagePath}`;
       return `${baseUrl}/${path}`;
+ 
 
+      
     case 'imgur':
       return `${CDN_CONFIG.imgur.baseUrl}/${imagePath}`;
 
