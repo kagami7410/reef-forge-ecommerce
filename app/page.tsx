@@ -38,7 +38,7 @@ export default function Home() {
             </div>
 
             <div className={`${styles.heroPricing}`}>
-              <p className='m-1 '>price from</p>
+              <p className=''>Starting price from:</p>
               <span className={styles.heroPrice}>£25</span>
               <span className={styles.stockBadge}>{featuredProduct.stock} in stock</span>
             </div>
