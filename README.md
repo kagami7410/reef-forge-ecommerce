@@ -96,6 +96,49 @@ npm run build
 npm start
 ```
 
+## Deployment
+
+### Deploy to Vercel (Recommended)
+
+This project is optimized for deployment on Vercel. Follow our comprehensive guide:
+
+**[📘 Vercel Deployment Guide](./VERCEL_DEPLOYMENT.md)** - Quick 30-minute deployment guide
+
+**Key features:**
+- One-click deployment from GitHub
+- Automatic SSL certificates
+- Global CDN
+- Preview deployments for pull requests
+- Built-in analytics
+
+**Quick Start:**
+1. Push your code to GitHub
+2. Import repository in [Vercel](https://vercel.com)
+3. Configure environment variables (see guide)
+4. Deploy!
+
+### Other Deployment Options
+
+For comprehensive deployment options including AWS, Docker, and CI/CD:
+- [Deployment Checklist](./DEPLOYMENT_CHECKLIST.md) - Detailed step-by-step checklist
+- [Deployment Summary](./DEPLOYMENT_SUMMARY.md) - Overview of all deployment options
+
+## Environment Variables
+
+Create a `.env.local` file based on `.env.example`:
+
+```bash
+# Required for production
+NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-key
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=your-stripe-key
+STRIPE_SECRET_KEY=your-stripe-secret
+STRIPE_WEBHOOK_SECRET=your-webhook-secret
+NEXT_PUBLIC_SITE_URL=https://your-domain.com
+```
+
+See [.env.example](./.env.example) for all available variables and setup instructions.
+
 ## Future Enhancements
 
 Consider adding:

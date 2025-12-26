@@ -13,7 +13,8 @@
       "Bash(echo:*)",
       "Bash(del \"components\\\\CheckoutModal.tsx\")",
       "Bash(del \"components\\\\CheckoutModal.module.css\")",
-      "Bash(del \"tailwind.config.ts\")"
+      "Bash(del \"tailwind.config.ts\")",
+      "Bash(npm run build:*)"
     ]
   }
 }

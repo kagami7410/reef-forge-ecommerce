@@ -1,89 +1,10 @@
 {
-  "buildCommand": "npm run build",
-  "devCommand": "npm run dev",
-  "installCommand": "npm install",
   "framework": "nextjs",
   "regions": ["iad1"],
-  "env": {
-    "NODE_ENV": "production"
-  },
-  "build": {
-    "env": {
-      "NEXT_PUBLIC_SUPABASE_URL": "@next-public-supabase-url",
-      "NEXT_PUBLIC_SUPABASE_ANON_KEY": "@next-public-supabase-anon-key",
-      "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY": "@next-public-stripe-publishable-key",
-      "STRIPE_SECRET_KEY": "@stripe-secret-key",
-      "STRIPE_WEBHOOK_SECRET": "@stripe-webhook-secret",
-      "NEXT_PUBLIC_SITE_URL": "@next-public-site-url",
-      "GOOGLE_CLIENT_ID": "@google-client-id",
-      "GOOGLE_CLIENT_SECRET": "@google-client-secret"
+  "buildCommand": "npm run build",
+  "git": {
+    "deploymentEnabled": {
+      "master": true
     }
-  },
-  "headers": [
-    {
-      "source": "/api/(.*)",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "no-store, no-cache, must-revalidate, max-age=0"
-        }
-      ]
-    },
-    {
-      "source": "/products/(.*)",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400"
-        }
-      ]
-    },
-    {
-      "source": "/_next/static/(.*)",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000, immutable"
-        }
-      ]
-    },
-    {
-      "source": "/(.*)",
-      "headers": [
-        {
-          "key": "X-Content-Type-Options",
-          "value": "nosniff"
-        },
-        {
-          "key": "X-Frame-Options",
-          "value": "DENY"
-        },
-        {
-          "key": "X-XSS-Protection",
-          "value": "1; mode=block"
-        },
-        {
-          "key": "Referrer-Policy",
-          "value": "origin-when-cross-origin"
-        },
-        {
-          "key": "Permissions-Policy",
-          "value": "camera=(), microphone=(), geolocation=()"
-        }
-      ]
-    }
-  ],
-  "redirects": [
-    {
-      "source": "/home",
-      "destination": "/",
-      "permanent": true
-    }
-  ],
-  "rewrites": [
-    {
-      "source": "/healthz",
-      "destination": "/api/health"
-    }
-  ]
+  }
 }
