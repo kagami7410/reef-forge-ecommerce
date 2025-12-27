@@ -31,13 +31,32 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [notificationMessage, setNotificationMessage] = useState('');
   const [isLoaded, setIsLoaded] = useState(false);
 
-  // Load cart from cookies on mount
+  // Load cart from localStorage and cookies on mount
   useEffect(() => {
+    // Try localStorage first (more reliable during OAuth redirects)
+    const localStorageCart = typeof window !== 'undefined' ? localStorage.getItem('shopping_cart') : null;
+
+    if (localStorageCart) {
+      try {
+        const parsedCart = JSON.parse(localStorageCart);
+        setCart(parsedCart);
+        setIsLoaded(true);
+        return;
+      } catch (error) {
+        console.error('Failed to parse cart from localStorage:', error);
+      }
+    }
+
+    // Fallback to cookies
     const savedCart = getCookie('shopping_cart');
     if (savedCart) {
       try {
         const parsedCart = JSON.parse(decodeURIComponent(savedCart));
         setCart(parsedCart);
+        // Migrate to localStorage
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('shopping_cart', JSON.stringify(parsedCart));
+        }
       } catch (error) {
         console.error('Failed to parse cart from cookie:', error);
       }
@@ -45,10 +64,17 @@ export function CartProvider({ children }: { children: ReactNode }) {
     setIsLoaded(true);
   }, []);
 
-  // Save cart to cookies whenever it changes
+  // Save cart to both localStorage and cookies whenever it changes
   useEffect(() => {
     if (isLoaded) {
       const cartJson = JSON.stringify(cart);
+
+      // Save to localStorage (primary storage)
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('shopping_cart', cartJson);
+      }
+
+      // Save to cookies (backup for cross-domain scenarios)
       setCookie('shopping_cart', encodeURIComponent(cartJson), 7); // 7 days expiry
     }
   }, [cart, isLoaded]);
@@ -92,6 +118,10 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   const clearCart = () => {
     setCart([]);
+    // Clear from localStorage
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('shopping_cart');
+    }
   };
 
   const getCartTotal = () => {

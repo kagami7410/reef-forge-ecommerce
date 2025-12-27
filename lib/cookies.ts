@@ -4,7 +4,11 @@ export const setCookie = (name: string, value: string, days: number) => {
   const expires = new Date();
   expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000);
 
-  document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/;SameSite=Lax`;
+  // Add Secure flag in production for better security
+  const isProduction = window.location.protocol === 'https:';
+  const secureFlag = isProduction ? 'Secure;' : '';
+
+  document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/;SameSite=Lax;${secureFlag}`;
 };
 
 export const getCookie = (name: string): string | null => {
