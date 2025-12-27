@@ -10,6 +10,17 @@ interface ProductImageGalleryProps {
 
 export default function ProductImageGallery({ images, productName }: ProductImageGalleryProps) {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+
+  const handleImageSelect = (index: number) => {
+    if (index !== selectedImageIndex) {
+      setIsTransitioning(true);
+      setTimeout(() => {
+        setSelectedImageIndex(index);
+        setIsTransitioning(false);
+      }, 150);
+    }
+  };
 
   return (
     <div className={styles.gallery}>
@@ -18,7 +29,8 @@ export default function ProductImageGallery({ images, productName }: ProductImag
         <img
           src={images[selectedImageIndex]}
           alt={`${productName} - Image ${selectedImageIndex + 1}`}
-          className={styles.mainImage}
+          className={`${styles.mainImage} ${isTransitioning ? styles.imageTransition : ''}`}
+          key={selectedImageIndex}
         />
       </div>
 
@@ -28,11 +40,12 @@ export default function ProductImageGallery({ images, productName }: ProductImag
           {images.map((image, index) => (
             <button
               key={index}
-              onClick={() => setSelectedImageIndex(index)}
+              onClick={() => handleImageSelect(index)}
               className={`${styles.thumbnail} ${
                 index === selectedImageIndex ? styles.thumbnailActive : ''
               }`}
               aria-label={`View image ${index + 1}`}
+              type="button"
             >
               <img src={image} alt={`${productName} thumbnail ${index + 1}`} />
             </button>
