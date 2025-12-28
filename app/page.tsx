@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import ProductCard from '@/components/ProductCard';
+import VideoPlayer from '@/components/VideoPlayer';
 import { products } from '@/lib/products';
 import styles from './page.module.css';
 
@@ -134,16 +135,16 @@ export default function Home() {
               <span className={styles.specValue}>{featuredProduct.category}</span>
             </div>
             <div className={styles.specItem}>
-              <span className={styles.specLabel}>Stock Status</span>
-              <span className={styles.specValue}>{featuredProduct.stock} units available</span>
+              <span className={styles.specLabel}>Material</span>
+              <span className={styles.specValue}>Reef safe PETG</span>
             </div>
             <div className={styles.specItem}>
               <span className={styles.specLabel}>Price</span>
-              <span className={styles.specValue}>£{featuredProduct.price}</span>
+              <span className={styles.specValue}>Starting from £25.99</span>
             </div>
             <div className={styles.specItem}>
-              <span className={styles.specLabel}>Warranty</span>
-              <span className={styles.specValue}>2 Years</span>
+              <span className={styles.specLabel}>Magnetic</span>
+              <span className={styles.specValue}> N52 Neodymium </span>
             </div>
           </div>
         </div>
@@ -154,38 +155,19 @@ export default function Home() {
           <div className={styles.videoHeader}>
             <span className={styles.videoBadge}>Product Video</span>
             <h2>See It In Action</h2>
-            <p>Watch how our {featuredProduct.name} delivers exceptional performance and quality</p>
+            <p>Watch how our {featuredProduct.name} sticks to aquarium glass up to 3/4" inch with ease </p>
           </div>
 
           <div className={styles.videoWrapper}>
-            <div className={styles.videoPlaceholder}>
-              <div className={styles.playButton}>
-                <svg fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M8 5v14l11-7z" />
-                </svg>
-              </div>
-              <div className={styles.videoOverlay}>
-                <p>Click to play product demonstration</p>
-              </div>
-              {/* Replace the src below with your actual video URL */}
-              <video
-                className={styles.video}
-                poster={featuredProduct.image}
-                controls
-              >
-                <source src="/path-to-your-video.mp4" type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
-            </div>
+            <VideoPlayer
+              videoUrl="https://res.cloudinary.com/drhvaqfux/video/upload/v1766919797/VID20250607214330_fyspwn.mp4"
+              posterImage={featuredProduct.image}
+              productName={featuredProduct.name}
+            />
           </div>
-
+{/* 
           <div className={styles.videoFeatures}>
             <div className={styles.videoFeatureItem}>
-              <div className={styles.videoFeatureIcon}>
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                </svg>
-              </div>
               <div>
                 <h4>HD Quality</h4>
                 <p>Watch in stunning 1080p</p>
@@ -193,11 +175,6 @@ export default function Home() {
             </div>
 
             <div className={styles.videoFeatureItem}>
-              <div className={styles.videoFeatureIcon}>
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
               <div>
                 <h4>Full Demo</h4>
                 <p>Complete product walkthrough</p>
@@ -215,7 +192,7 @@ export default function Home() {
                 <p>Professional insights included</p>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </section>
 

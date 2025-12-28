@@ -731,6 +731,7 @@
   background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, transparent 100%);
   color: white;
   z-index: 2;
+  cursor: pointer;
 }
 
 .videoOverlay p {
@@ -794,12 +795,6 @@
   margin: 0;
   font-size: 0.9rem;
   opacity: 0.9;
-}
-
-/* Hide play button when video is playing */
-.videoPlaceholder video:not([poster]) ~ .playButton,
-.videoPlaceholder video[controls]:focus ~ .playButton {
-  display: none;
 }
 
 /* Responsive Design for Video Section */
