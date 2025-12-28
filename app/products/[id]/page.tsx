@@ -50,7 +50,7 @@ export default function ProductDetailPage() {
         <div className={styles.info}>
           <span className={styles.category}>{product.category}</span>
           <h1>{product.name}</h1>
-          <p className={styles.price}>${product.price.toFixed(2)}</p>
+          <p className={styles.price}> £{product.price.toFixed(2)}</p>
           <p className={styles.stock}>
             {product.stock > 0
               ? `${product.stock} in stock`

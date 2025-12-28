@@ -31,7 +31,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         <div className={styles.content}>
           <h3>{product.name}</h3>
           <p className={styles.category}>{product.category}</p>
-          <p className={styles.price}>${product.price.toFixed(2)}</p>
+          <p className={styles.price}>£{product.price.toFixed(2)}</p>
           <p className={styles.stock}>
             {product.stock > 0 ? `${product.stock} in stock` : 'Out of stock'}
           </p>

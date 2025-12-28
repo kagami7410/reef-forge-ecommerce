@@ -16,7 +16,11 @@
       "Bash(del \"tailwind.config.ts\")",
       "Bash(npm run build:*)",
       "Bash(npx next build:*)",
-      "Bash(npx tsc:*)"
+      "Bash(npx tsc:*)",
+      "Bash(dir:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push)"
     ]
   }
 }

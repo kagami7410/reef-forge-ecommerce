@@ -15,30 +15,35 @@ export interface Product {
 // Include subfolder path: 'subfolder/image.jpg'
 const productImageData = {
   magnetic_tray_extraLarge: {
-    main: 'v1766668115/IMG20250406195849_itcncb.png',
+    main: 'v1766668115/IMG20250406195809_agngbr.png',
     gallery: [
+      'v1766668115/IMG20250406195809_agngbr.png',
       'v1766668115/IMG20250406195849_itcncb.png',
-      'magnetic_tray_extraLarge/image2.jpg',
-      'magnetic_tray_extraLarge/image3.jpg',
-      'magnetic_tray_extraLarge/image4.jpg'
+      'v1766668115/IMG20250406102606_y0tdge.png',
+      'v1766668115/IMG20250406102914_dezk2e.png',
+      'v1766668115/IMG20250406114344_loa9ls.png'
     ]
   },
   magnetic_tray_large: {
-    main: 'magnetic_tray_large/main.jpg',
+    main: 'v1766668739/IMG20250406195739_eqfvod.png',
     gallery: [
-      'magnetic_tray_large/image1.jpg',
-      'magnetic_tray_large/image2.jpg',
-      'magnetic_tray_large/image3.jpg',
-      'magnetic_tray_large/image4.jpg'
+      'v1766668739/IMG20250406195739_eqfvod.png',
+      'v1766668739/IMG20250406200006_dtid8c.png',
+      'v1766668739/IMG20250406102858_tyymuw.png',
+      'v1766668739/IMG20250406102512_uo4xro.png',
+      'v1766668739/IMG20250406102742_xsnfng.png',
+
     ]
   },
   magnetic_tray_standard: {
-    main: 'magnetic_tray_standard/main.jpg',
+    main: 'v1766668725/IMG20250406195749_h9nelw.png',
     gallery: [
-      'magnetic_tray_standard/image1.jpg',
-      'magnetic_tray_standard/image2.jpg',
-      'magnetic_tray_standard/image3.jpg',
-      'magnetic_tray_standard/image4.jpg'
+      'v1766668725/IMG20250406195749_h9nelw.png',
+      'v1766668725/IMG20250406200043_j5j0md.png',
+      'v1766668725/IMG20250406102846_mlxuv9.png',
+      'v1766668725/IMG20250406102839_bkhfwz.png',
+      'v1766668725/IMG20250406102448_d1lpd1.png'
+
     ]
   },
   usbhub: {
@@ -76,59 +81,29 @@ export const products: Product[] = [
     name: "Magnetic Frag Rack [Extra Large]",
     price: 34.99,
     description: "High-quality wireless headphones with noise cancellation",
-    category: "Electronics",
+    category: "Frag Rack",
     image: getImageUrl(productImageData.magnetic_tray_extraLarge.main),
     images: productImageData.magnetic_tray_extraLarge.gallery.map(img => getImageUrl(img)),
     stock: 15
   },
   {
     id: 2,
-    name: "Smart Watch",
-    price: 199.99,
+    name: "Magnetic Frag Rack [Large]",
+    price: 29.99,
     description: "Feature-rich smartwatch with fitness tracking",
-    category: "Electronics",
+    category: "Frag Rack",
     image: getImageUrl(productImageData.magnetic_tray_large.main),
     images: productImageData.magnetic_tray_large.gallery.map(img => getImageUrl(img)),
     stock: 8
   },
   {
     id: 3,
-    name: "Laptop Backpack",
-    price: 49.99,
+    name: "Magnetic Frag Rack [Standard]",
+    price: 25.99,
     description: "Durable backpack with laptop compartment",
-    category: "Accessories",
+    category: "Frag Rack",
     image: getImageUrl(productImageData.magnetic_tray_standard.main),
     images: productImageData.magnetic_tray_standard.gallery.map(img => getImageUrl(img)),
-    stock: 25
-  },
-  {
-    id: 4,
-    name: "USB-C Hub",
-    price: 34.99,
-    description: "7-in-1 USB-C hub with multiple ports",
-    category: "Electronics",
-    image: getImageUrl(productImageData.usbhub.main),
-    images: productImageData.usbhub.gallery.map(img => getImageUrl(img)),
-    stock: 30
-  },
-  {
-    id: 5,
-    name: "Desk Lamp",
-    price: 29.99,
-    description: "LED desk lamp with adjustable brightness",
-    category: "Home",
-    image: getImageUrl(productImageData.lamp.main),
-    images: productImageData.lamp.gallery.map(img => getImageUrl(img)),
-    stock: 12
-  },
-  {
-    id: 6,
-    name: "Mechanical Keyboard",
-    price: 89.99,
-    description: "RGB mechanical keyboard with blue switches",
-    category: "Electronics",
-    image: getImageUrl(productImageData.keyboard.main),
-    images: productImageData.keyboard.gallery.map(img => getImageUrl(img)),
     stock: 10
   }
 ];
