@@ -117,14 +117,14 @@ function CheckoutForm() {
                   <p className={styles.itemName}>{item.name}</p>
                   <p className={styles.itemQuantity}>Qty: {item.quantity}</p>
                 </div>
-                <p className={styles.itemPrice}>${(item.price * item.quantity).toFixed(2)}</p>
+                <p className={styles.itemPrice}>£{(item.price * item.quantity).toFixed(2)}</p>
               </div>
             ))}
           </div>
           <div className={styles.summaryTotals}>
             <div className={styles.summaryRow}>
               <span>Subtotal:</span>
-              <span>${subtotal.toFixed(2)}</span>
+              <span>£{subtotal.toFixed(2)}</span>
             </div>
             <div className={styles.summaryRow}>
               <span>Shipping:</span>
@@ -132,11 +132,11 @@ function CheckoutForm() {
             </div>
             <div className={styles.summaryRow}>
               <span>Tax:</span>
-              <span>${tax.toFixed(2)}</span>
+              <span>£{tax.toFixed(2)}</span>
             </div>
             <div className={styles.totalRow}>
               <span>Total:</span>
-              <span>${total.toFixed(2)}</span>
+              <span>£{total.toFixed(2)}</span>
             </div>
           </div>
         </div>
@@ -186,7 +186,7 @@ function CheckoutForm() {
             className={styles.submitButton}
             disabled={!stripe || !addressComplete || isProcessing}
           >
-            {isProcessing ? 'Processing...' : `Pay $${total.toFixed(2)}`}
+            {isProcessing ? 'Processing...' : `Pay £${total.toFixed(2)}`}
           </button>
         </div>
       </div>
