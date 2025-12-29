@@ -25,6 +25,9 @@ function CheckoutForm() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [addressComplete, setAddressComplete] = useState(false);
+  const [discountCode, setDiscountCode] = useState('');
+  const [appliedDiscount, setAppliedDiscount] = useState<{code: string; amount: number} | null>(null);
+  const [discountError, setDiscountError] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -100,7 +103,28 @@ function CheckoutForm() {
   };
 
   const subtotal = getCartTotal();
-  const total = subtotal;
+  const discountAmount = appliedDiscount ? appliedDiscount.amount : 0;
+  const total = subtotal - discountAmount;
+
+  const handleApplyDiscount = () => {
+    setDiscountError(null);
+    const code = discountCode.trim().toUpperCase();
+
+    if (code === 'SAVE10') {
+      const discount = subtotal * 0.1; // 10% off
+      setAppliedDiscount({ code, amount: discount });
+      setDiscountError(null);
+    } else {
+      setDiscountError('Invalid discount code');
+      setAppliedDiscount(null);
+    }
+  };
+
+  const handleRemoveDiscount = () => {
+    setAppliedDiscount(null);
+    setDiscountCode('');
+    setDiscountError(null);
+  };
 
   return (
     <form onSubmit={handleSubmit} className={styles.checkoutForm}>
@@ -129,10 +153,54 @@ function CheckoutForm() {
               <span>Shipping:</span>
               <span>Free</span>
             </div>
+            {appliedDiscount && (
+              <div className={styles.summaryRow} style={{ color: '#22c55e' }}>
+                <span>Discount ({appliedDiscount.code}):</span>
+                <span>-£{appliedDiscount.amount.toFixed(2)}</span>
+              </div>
+            )}
             <div className={styles.totalRow}>
               <span>Total:</span>
               <span>£{total.toFixed(2)}</span>
             </div>
+          </div>
+
+          {/* Discount Code Section */}
+          <div className={styles.discountSection}>
+            <h4>Discount Code</h4>
+            {!appliedDiscount ? (
+              <div className={styles.discountInput}>
+                <input
+                  type="text"
+                  value={discountCode}
+                  onChange={(e) => setDiscountCode(e.target.value)}
+                  placeholder="Enter code"
+                  className={styles.discountCodeInput}
+                />
+                <button
+                  type="button"
+                  onClick={handleApplyDiscount}
+                  className={styles.applyButton}
+                  disabled={!discountCode.trim()}
+                >
+                  Apply
+                </button>
+              </div>
+            ) : (
+              <div className={styles.discountApplied}>
+                <span className={styles.discountSuccess}>
+                  ✓ {appliedDiscount.code} applied
+                </span>
+                <button
+                  type="button"
+                  onClick={handleRemoveDiscount}
+                  className={styles.removeButton}
+                >
+                  Remove
+                </button>
+              </div>
+            )}
+            {discountError && <p className={styles.discountError}>{discountError}</p>}
           </div>
         </div>
 
@@ -222,7 +290,8 @@ export default function CheckoutPage() {
 
       try {
         const subtotal = getCartTotal();
-        const total = subtotal;
+        const discountAmount = appliedDiscount ? appliedDiscount.amount : 0;
+        const total = subtotal - discountAmount;
 
         const orderItems = cart.map((item) => ({
           product_id: item.id,
@@ -237,6 +306,9 @@ export default function CheckoutPage() {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             items: orderItems,
+            subtotal,
+            discount: discountAmount,
+            discountCode: appliedDiscount?.code || null,
             total,
           }),
         });

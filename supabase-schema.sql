@@ -10,6 +10,8 @@ CREATE TABLE IF NOT EXISTS orders (
   items JSONB NOT NULL,
   subtotal DECIMAL(10, 2) NOT NULL,
   tax DECIMAL(10, 2) NOT NULL,
+  discount DECIMAL(10, 2) DEFAULT 0,
+  discount_code TEXT,
   total DECIMAL(10, 2) NOT NULL,
   status TEXT DEFAULT 'pending' CHECK (status IN ('pending', 'paid', 'processing', 'completed', 'cancelled')),
   stripe_session_id TEXT,

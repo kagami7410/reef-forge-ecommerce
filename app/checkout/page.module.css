@@ -190,6 +190,99 @@
   color: #333;
 }
 
+/* Discount Section */
+.discountSection {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.discountSection h4 {
+  margin: 0 0 15px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+}
+
+.discountInput {
+  display: flex;
+  gap: 10px;
+}
+
+.discountCodeInput {
+  flex: 1;
+  padding: 12px 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.discountCodeInput:focus {
+  border-color: #0066cc;
+}
+
+.applyButton {
+  padding: 12px 24px;
+  background-color: #0066cc;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.applyButton:hover:not(:disabled) {
+  background-color: #0052a3;
+}
+
+.applyButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.discountApplied {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 15px;
+  background-color: #f0fdf4;
+  border: 1px solid #86efac;
+  border-radius: 6px;
+}
+
+.discountSuccess {
+  color: #16a34a;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.removeButton {
+  padding: 8px 16px;
+  background-color: transparent;
+  color: #dc2626;
+  border: 1px solid #dc2626;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.removeButton:hover {
+  background-color: #dc2626;
+  color: white;
+}
+
+.discountError {
+  margin: 10px 0 0 0;
+  color: #dc2626;
+  font-size: 13px;
+}
+
 /* Action Buttons */
 .actions {
   display: flex;

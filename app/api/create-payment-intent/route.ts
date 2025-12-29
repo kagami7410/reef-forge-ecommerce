@@ -20,12 +20,14 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { items, total } = body;
+    const { items, subtotal, discount, discountCode, total } = body;
 
     console.log('=== Payment Intent Request ===');
     console.log('User:', user.id, user.email);
     console.log('Items count:', items?.length);
     console.log('Items:', JSON.stringify(items, null, 2));
+    console.log('Subtotal:', subtotal);
+    console.log('Discount:', discount, 'Code:', discountCode);
     console.log('Total:', total);
 
     if (!items || items.length === 0) {
@@ -47,6 +49,9 @@ export async function POST(request: NextRequest) {
         user_id: user.id,
         user_email: user.email || '',
         item_count: items.length.toString(),
+        subtotal: subtotal.toString(),
+        discount: discount?.toString() || '0',
+        discount_code: discountCode || '',
         total: total.toString(),
       },
     });
@@ -62,8 +67,10 @@ export async function POST(request: NextRequest) {
           user_email: user.email,
           user_name: user.user_metadata?.full_name || user.email,
           items: items,
-          subtotal: total,
+          subtotal: subtotal,
           tax: 0,
+          discount: discount || 0,
+          discount_code: discountCode || null,
           total: total,
           status: 'pending',
           payment_intent_id: paymentIntent.id,
