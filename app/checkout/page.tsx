@@ -100,8 +100,7 @@ function CheckoutForm() {
   };
 
   const subtotal = getCartTotal();
-  const tax = subtotal * 0.1;
-  const total = subtotal + tax;
+  const total = subtotal;
 
   return (
     <form onSubmit={handleSubmit} className={styles.checkoutForm}>
@@ -129,10 +128,6 @@ function CheckoutForm() {
             <div className={styles.summaryRow}>
               <span>Shipping:</span>
               <span>Free</span>
-            </div>
-            <div className={styles.summaryRow}>
-              <span>Tax:</span>
-              <span>£{tax.toFixed(2)}</span>
             </div>
             <div className={styles.totalRow}>
               <span>Total:</span>
@@ -227,8 +222,7 @@ export default function CheckoutPage() {
 
       try {
         const subtotal = getCartTotal();
-        const tax = subtotal * 0.1;
-        const total = subtotal + tax;
+        const total = subtotal;
 
         const orderItems = cart.map((item) => ({
           product_id: item.id,
@@ -243,8 +237,6 @@ export default function CheckoutPage() {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             items: orderItems,
-            subtotal,
-            tax,
             total,
           }),
         });

@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { items, subtotal, tax, total } = body;
+    const { items, total } = body;
 
     console.log('=== Payment Intent Request ===');
     console.log('User:', user.id, user.email);
@@ -47,8 +47,7 @@ export async function POST(request: NextRequest) {
         user_id: user.id,
         user_email: user.email || '',
         item_count: items.length.toString(),
-        subtotal: subtotal.toString(),
-        tax: tax.toString(),
+        total: total.toString(),
       },
     });
     console.log('Payment intent created:', paymentIntent.id);
@@ -63,8 +62,8 @@ export async function POST(request: NextRequest) {
           user_email: user.email,
           user_name: user.user_metadata?.full_name || user.email,
           items: items,
-          subtotal: subtotal,
-          tax: tax,
+          subtotal: total,
+          tax: 0,
           total: total,
           status: 'pending',
           payment_intent_id: paymentIntent.id,
