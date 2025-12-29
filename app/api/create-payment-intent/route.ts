@@ -22,6 +22,12 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { items, subtotal, tax, total } = body;
 
+    console.log('=== Payment Intent Request ===');
+    console.log('User:', user.id, user.email);
+    console.log('Items count:', items?.length);
+    console.log('Items:', JSON.stringify(items, null, 2));
+    console.log('Total:', total);
+
     if (!items || items.length === 0) {
       return NextResponse.json(
         { error: 'Cart is empty' },
@@ -30,6 +36,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Create a payment intent
+    console.log('Creating Stripe payment intent...');
     const paymentIntent = await stripe.paymentIntents.create({
       amount: Math.round(total * 100), // Convert to cents
       currency: 'usd',
@@ -39,13 +46,15 @@ export async function POST(request: NextRequest) {
       metadata: {
         user_id: user.id,
         user_email: user.email || '',
-        items: JSON.stringify(items),
+        item_count: items.length.toString(),
         subtotal: subtotal.toString(),
         tax: tax.toString(),
       },
     });
+    console.log('Payment intent created:', paymentIntent.id);
 
     // Create order in Supabase with pending status
+    console.log('Creating order in Supabase...');
     const { data: order, error: orderError } = await supabase
       .from('orders')
       .insert([
@@ -90,9 +99,12 @@ export async function POST(request: NextRequest) {
       { status: 200 }
     );
   } catch (error) {
-    console.error('Payment intent creation error:', error);
+    console.error('=== Payment intent creation error ===');
+    console.error('Error type:', error instanceof Error ? error.constructor.name : typeof error);
+    console.error('Error message:', error instanceof Error ? error.message : error);
+    console.error('Full error:', error);
     return NextResponse.json(
-      { error: 'Failed to create payment intent' },
+      { error: 'Failed to create payment intent', details: error instanceof Error ? error.message : 'Unknown error' },
       { status: 500 }
     );
   }
