@@ -16,7 +16,11 @@ import styles from './page.module.css';
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
-function CheckoutForm() {
+interface CheckoutFormProps {
+  paymentIntentId: string;
+}
+
+function CheckoutForm({ paymentIntentId }: CheckoutFormProps) {
   const stripe = useStripe();
   const elements = useElements();
   const { cart, getCartTotal, clearCart } = useCart();
@@ -28,6 +32,7 @@ function CheckoutForm() {
   const [discountCode, setDiscountCode] = useState('');
   const [appliedDiscount, setAppliedDiscount] = useState<{code: string; amount: number} | null>(null);
   const [discountError, setDiscountError] = useState<string | null>(null);
+  const [isApplyingDiscount, setIsApplyingDiscount] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -106,24 +111,75 @@ function CheckoutForm() {
   const discountAmount = appliedDiscount ? appliedDiscount.amount : 0;
   const total = subtotal - discountAmount;
 
-  const handleApplyDiscount = () => {
+  const handleApplyDiscount = async () => {
     setDiscountError(null);
+    setIsApplyingDiscount(true);
     const code = discountCode.trim().toUpperCase();
 
     if (code === 'SAVE10') {
       const discount = subtotal * 0.1; // 10% off
-      setAppliedDiscount({ code, amount: discount });
-      setDiscountError(null);
+
+      try {
+        // Update the payment intent with the discount
+        const response = await fetch('/api/update-payment-intent', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            paymentIntentId,
+            subtotal,
+            discount,
+            discountCode: code,
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to apply discount');
+        }
+
+        setAppliedDiscount({ code, amount: discount });
+        setDiscountError(null);
+      } catch (err) {
+        setDiscountError('Failed to apply discount. Please try again.');
+        console.error('Discount error:', err);
+      } finally {
+        setIsApplyingDiscount(false);
+      }
     } else {
       setDiscountError('Invalid discount code');
       setAppliedDiscount(null);
+      setIsApplyingDiscount(false);
     }
   };
 
-  const handleRemoveDiscount = () => {
-    setAppliedDiscount(null);
-    setDiscountCode('');
-    setDiscountError(null);
+  const handleRemoveDiscount = async () => {
+    setIsApplyingDiscount(true);
+
+    try {
+      // Update the payment intent to remove the discount
+      const response = await fetch('/api/update-payment-intent', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          paymentIntentId,
+          subtotal,
+          discount: 0,
+          discountCode: null,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to remove discount');
+      }
+
+      setAppliedDiscount(null);
+      setDiscountCode('');
+      setDiscountError(null);
+    } catch (err) {
+      setDiscountError('Failed to remove discount. Please try again.');
+      console.error('Remove discount error:', err);
+    } finally {
+      setIsApplyingDiscount(false);
+    }
   };
 
   return (
@@ -181,9 +237,9 @@ function CheckoutForm() {
                   type="button"
                   onClick={handleApplyDiscount}
                   className={styles.applyButton}
-                  disabled={!discountCode.trim()}
+                  disabled={!discountCode.trim() || isApplyingDiscount}
                 >
-                  Apply
+                  {isApplyingDiscount ? 'Applying...' : 'Apply'}
                 </button>
               </div>
             ) : (
@@ -262,6 +318,7 @@ export default function CheckoutPage() {
   const { cart, getCartTotal } = useCart();
   const router = useRouter();
   const [clientSecret, setClientSecret] = useState<string>('');
+  const [paymentIntentId, setPaymentIntentId] = useState<string>('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const hasCreatedIntent = useRef(false);
@@ -290,8 +347,7 @@ export default function CheckoutPage() {
 
       try {
         const subtotal = getCartTotal();
-        const discountAmount = appliedDiscount ? appliedDiscount.amount : 0;
-        const total = subtotal - discountAmount;
+        const total = subtotal; // Initial payment intent has no discount
 
         const orderItems = cart.map((item) => ({
           product_id: item.id,
@@ -307,8 +363,8 @@ export default function CheckoutPage() {
           body: JSON.stringify({
             items: orderItems,
             subtotal,
-            discount: discountAmount,
-            discountCode: appliedDiscount?.code || null,
+            discount: 0,
+            discountCode: null,
             total,
           }),
         });
@@ -320,6 +376,7 @@ export default function CheckoutPage() {
         }
 
         setClientSecret(data.clientSecret);
+        setPaymentIntentId(data.paymentIntentId);
       } catch (err) {
         console.error('Error creating payment intent:', err);
         setError(err instanceof Error ? err.message : 'Failed to initialize payment');
@@ -367,9 +424,9 @@ export default function CheckoutPage() {
           </div>
         )}
 
-        {!loading && !error && clientSecret && (
+        {!loading && !error && clientSecret && paymentIntentId && (
           <Elements stripe={stripePromise} options={options}>
-            <CheckoutForm />
+            <CheckoutForm paymentIntentId={paymentIntentId} />
           </Elements>
         )}
       </div>

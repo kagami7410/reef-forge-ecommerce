@@ -100,6 +100,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(
       {
         clientSecret: paymentIntent.client_secret,
+        paymentIntentId: paymentIntent.id,
         orderId: order.id,
       },
       { status: 200 }
