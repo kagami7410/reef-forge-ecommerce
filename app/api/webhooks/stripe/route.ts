@@ -161,12 +161,12 @@ export async function POST(request: NextRequest) {
                     total: parseFloat(order.total),
                     shippingAddress: shipping?.address && shipping?.name ? {
                       name: shipping.name,
-                      line1: shipping.address.line1,
+                      line1: shipping.address.line1 || undefined,
                       line2: shipping.address.line2 || undefined,
-                      city: shipping.address.city,
+                      city: shipping.address.city || undefined,
                       county: shipping.address.state || undefined,
-                      postcode: shipping.address.postal_code,
-                      country: shipping.address.country,
+                      postcode: shipping.address.postal_code || undefined,
+                      country: shipping.address.country || undefined,
                     } : undefined,
                   });
 
@@ -249,12 +249,12 @@ export async function POST(request: NextRequest) {
                 total: parseFloat(order.total),
                 shippingAddress: shipping?.address && shipping?.name ? {
                   name: shipping.name,
-                  line1: shipping.address.line1,
+                  line1: shipping.address.line1 || undefined,
                   line2: shipping.address.line2 || undefined,
-                  city: shipping.address.city,
+                  city: shipping.address.city || undefined,
                   county: shipping.address.state || undefined,
-                  postcode: shipping.address.postal_code,
-                  country: shipping.address.country,
+                  postcode: shipping.address.postal_code || undefined,
+                  country: shipping.address.country || undefined,
                 } : undefined,
               });
 
