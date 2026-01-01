@@ -217,8 +217,8 @@ function CheckoutForm({ paymentIntentId }: CheckoutFormProps) {
               <span>{shippingCost === 0 ? 'Free' : `£${shippingCost.toFixed(2)}`}</span>
             </div>
             {shippingCost > 0 && subtotal < FREE_SHIPPING_THRESHOLD && (
-              <div className={styles.summaryRow} style={{ fontSize: '0.875rem', color: '#666' }}>
-                <span colSpan={2}>Add £{(FREE_SHIPPING_THRESHOLD - subtotal).toFixed(2)} more for free shipping!</span>
+              <div className={styles.summaryRow} style={{ fontSize: '0.875rem', color: '#666', gridColumn: '1 / -1' }}>
+                <span>Add £{(FREE_SHIPPING_THRESHOLD - subtotal).toFixed(2)} more for free shipping!</span>
               </div>
             )}
             {appliedDiscount && (
