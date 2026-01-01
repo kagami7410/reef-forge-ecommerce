@@ -150,7 +150,7 @@ function OrdersContent() {
                     <p className={styles.itemQuantity}>Qty: {item.quantity}</p>
                   </div>
                   <p className={styles.itemPrice}>
-                    ${(item.price * item.quantity).toFixed(2)}
+                    £{(item.price * item.quantity).toFixed(2)}
                   </p>
                 </div>
               ))}
@@ -159,15 +159,27 @@ function OrdersContent() {
             <div className={styles.orderSummary}>
               <div className={styles.summaryRow}>
                 <span>Subtotal:</span>
-                <span>${order.subtotal.toFixed(2)}</span>
+                <span>£{order.subtotal.toFixed(2)}</span>
               </div>
+              {order.shipping !== undefined && order.shipping !== null && (
+                <div className={styles.summaryRow}>
+                  <span>Shipping:</span>
+                  <span>{order.shipping === 0 ? 'Free' : `£${order.shipping.toFixed(2)}`}</span>
+                </div>
+              )}
+              {order.discount > 0 && (
+                <div className={styles.summaryRow} style={{ color: '#22c55e' }}>
+                  <span>Discount:</span>
+                  <span>-£{order.discount.toFixed(2)}</span>
+                </div>
+              )}
               <div className={styles.summaryRow}>
                 <span>Tax:</span>
-                <span>${order.tax.toFixed(2)}</span>
+                <span>£{order.tax.toFixed(2)}</span>
               </div>
               <div className={styles.totalRow}>
                 <span>Total:</span>
-                <span>${order.total.toFixed(2)}</span>
+                <span>£{order.total.toFixed(2)}</span>
               </div>
             </div>
 

@@ -43,9 +43,13 @@ export interface Order {
   user_name: string;
   items: OrderItem[];
   subtotal: number;
+  shipping: number;
   tax: number;
+  discount: number;
+  discount_code?: string;
   total: number;
   status: 'pending' | 'processing' | 'completed' | 'cancelled' | 'paid';
+  payment_intent_id?: string;
   shipping_address_line1?: string;
   shipping_address_line2?: string;
   shipping_city?: string;
@@ -62,9 +66,13 @@ export interface DatabaseOrder {
   user_name: string;
   items: OrderItem[];
   subtotal: number;
+  shipping: number;
   tax: number;
+  discount: number;
+  discount_code?: string;
   total: number;
   status: string;
+  payment_intent_id?: string;
   shipping_address_line1?: string;
   shipping_address_line2?: string;
   shipping_city?: string;

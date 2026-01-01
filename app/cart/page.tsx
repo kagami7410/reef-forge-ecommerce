@@ -32,8 +32,8 @@ export default function CartPage() {
     );
   }
 
-  const FREE_SHIPPING_THRESHOLD = 49;
-  const SHIPPING_FEE = 2.95;
+  const FREE_SHIPPING_THRESHOLD = parseFloat(process.env.NEXT_PUBLIC_FREE_SHIPPING_THRESHOLD || '49');
+  const SHIPPING_FEE = parseFloat(process.env.NEXT_PUBLIC_SHIPPING_FEE || '2.95');
 
   const subtotal = getCartTotal();
   const shippingCost = subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_FEE;

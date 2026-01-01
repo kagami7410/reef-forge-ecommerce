@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import { createAdminClient } from '@/lib/supabase-server';
+import { resend } from '@/lib/resend';
+import { getOrderConfirmationEmail } from '@/lib/emails/order-confirmation';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: '2025-12-15.clover',
@@ -137,6 +139,50 @@ export async function POST(request: NextRequest) {
               console.error('Failed to update order:', updateError);
             } else {
               console.log('Order updated successfully via fallback:', foundOrderId);
+
+              // Fetch the complete order details to send confirmation email
+              const { data: order } = await supabaseAdmin
+                .from('orders')
+                .select('*')
+                .eq('id', foundOrderId)
+                .single();
+
+              if (order) {
+                try {
+                  const emailContent = getOrderConfirmationEmail({
+                    orderId: order.id,
+                    customerName: order.user_name,
+                    customerEmail: order.user_email,
+                    items: order.items,
+                    subtotal: parseFloat(order.subtotal),
+                    shipping: parseFloat(order.shipping || 0),
+                    discount: parseFloat(order.discount || 0),
+                    discountCode: order.discount_code,
+                    total: parseFloat(order.total),
+                    shippingAddress: shipping?.address && shipping?.name ? {
+                      name: shipping.name,
+                      line1: shipping.address.line1,
+                      line2: shipping.address.line2 || undefined,
+                      city: shipping.address.city,
+                      county: shipping.address.state || undefined,
+                      postcode: shipping.address.postal_code,
+                      country: shipping.address.country,
+                    } : undefined,
+                  });
+
+                  await resend.emails.send({
+                    from: process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev',
+                    to: order.user_email,
+                    subject: emailContent.subject,
+                    html: emailContent.html,
+                  });
+
+                  console.log('Order confirmation email sent to:', order.user_email);
+                } catch (emailError) {
+                  console.error('Failed to send order confirmation email:', emailError);
+                  // Don't fail the webhook if email fails
+                }
+              }
             }
           } else {
             console.error('Could not find order by payment_intent_id either');
@@ -181,6 +227,50 @@ export async function POST(request: NextRequest) {
           console.error('Error details:', JSON.stringify(updateError));
         } else {
           console.log('Order updated successfully:', orderId);
+
+          // Fetch the complete order details to send confirmation email
+          const { data: order } = await supabaseAdmin
+            .from('orders')
+            .select('*')
+            .eq('id', orderId)
+            .single();
+
+          if (order) {
+            try {
+              const emailContent = getOrderConfirmationEmail({
+                orderId: order.id,
+                customerName: order.user_name,
+                customerEmail: order.user_email,
+                items: order.items,
+                subtotal: parseFloat(order.subtotal),
+                shipping: parseFloat(order.shipping || 0),
+                discount: parseFloat(order.discount || 0),
+                discountCode: order.discount_code,
+                total: parseFloat(order.total),
+                shippingAddress: shipping?.address && shipping?.name ? {
+                  name: shipping.name,
+                  line1: shipping.address.line1,
+                  line2: shipping.address.line2 || undefined,
+                  city: shipping.address.city,
+                  county: shipping.address.state || undefined,
+                  postcode: shipping.address.postal_code,
+                  country: shipping.address.country,
+                } : undefined,
+              });
+
+              await resend.emails.send({
+                from: process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev',
+                to: order.user_email,
+                subject: emailContent.subject,
+                html: emailContent.html,
+              });
+
+              console.log('Order confirmation email sent to:', order.user_email);
+            } catch (emailError) {
+              console.error('Failed to send order confirmation email:', emailError);
+              // Don't fail the webhook if email fails
+            }
+          }
         }
         break;
       }

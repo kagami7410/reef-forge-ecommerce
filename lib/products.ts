@@ -105,6 +105,17 @@ export const products: Product[] = [
     image: getImageUrl(productImageData.magnetic_tray_standard.main),
     images: productImageData.magnetic_tray_standard.gallery.map(img => getImageUrl(img)),
     stock: 10
+  },
+
+  {
+    id: 4,
+    name: "Magnetic Frag Rack [TEST]",
+    price: .10,
+    description: "Durable backpack with laptop compartment",
+    category: "TEST",
+    image: getImageUrl(productImageData.magnetic_tray_standard.main),
+    images: productImageData.magnetic_tray_standard.gallery.map(img => getImageUrl(img)),
+    stock: 10
   }
 ];
 

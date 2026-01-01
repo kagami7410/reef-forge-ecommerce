@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { paymentIntentId, subtotal, discount, discountCode } = body;
+    const { paymentIntentId, subtotal, shipping, discount, discountCode } = body;
 
     if (!paymentIntentId) {
       return NextResponse.json(
@@ -29,13 +29,23 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const total = subtotal - (discount || 0);
+    const total = subtotal + (shipping || 0) - (discount || 0);
+
+    // Validate minimum amount for GBP (£0.30 = 30 pence)
+    const MINIMUM_AMOUNT_GBP = 0.30;
+    if (total < MINIMUM_AMOUNT_GBP) {
+      return NextResponse.json(
+        { error: `Minimum order amount is £${MINIMUM_AMOUNT_GBP.toFixed(2)}` },
+        { status: 400 }
+      );
+    }
 
     // Update the payment intent with new amount
     const paymentIntent = await stripe.paymentIntents.update(paymentIntentId, {
-      amount: Math.round(total * 100), // Convert to cents
+      amount: Math.round(total * 100), // Convert to pence
       metadata: {
         subtotal: subtotal.toString(),
+        shipping: shipping?.toString() || '0',
         discount: discount?.toString() || '0',
         discount_code: discountCode || '',
         total: total.toString(),
@@ -46,6 +56,7 @@ export async function POST(request: NextRequest) {
     await supabase
       .from('orders')
       .update({
+        shipping: shipping || 0,
         discount: discount || 0,
         discount_code: discountCode || null,
         total: total,

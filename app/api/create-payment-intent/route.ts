@@ -20,13 +20,14 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { items, subtotal, discount, discountCode, total } = body;
+    const { items, subtotal, shipping, discount, discountCode, total } = body;
 
     console.log('=== Payment Intent Request ===');
     console.log('User:', user.id, user.email);
     console.log('Items count:', items?.length);
     console.log('Items:', JSON.stringify(items, null, 2));
     console.log('Subtotal:', subtotal);
+    console.log('Shipping:', shipping);
     console.log('Discount:', discount, 'Code:', discountCode);
     console.log('Total:', total);
 
@@ -37,11 +38,20 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Validate minimum amount for GBP (£0.30 = 30 pence)
+    const MINIMUM_AMOUNT_GBP = 0.30;
+    if (total < MINIMUM_AMOUNT_GBP) {
+      return NextResponse.json(
+        { error: `Minimum order amount is £${MINIMUM_AMOUNT_GBP.toFixed(2)}` },
+        { status: 400 }
+      );
+    }
+
     // Create a payment intent
     console.log('Creating Stripe payment intent...');
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: Math.round(total * 100), // Convert to cents
-      currency: 'usd',
+      amount: Math.round(total * 100), // Convert to pence
+      currency: 'gbp',
       automatic_payment_methods: {
         enabled: true,
       },
@@ -50,6 +60,7 @@ export async function POST(request: NextRequest) {
         user_email: user.email || '',
         item_count: items.length.toString(),
         subtotal: subtotal.toString(),
+        shipping: shipping?.toString() || '0',
         discount: discount?.toString() || '0',
         discount_code: discountCode || '',
         total: total.toString(),
@@ -68,6 +79,7 @@ export async function POST(request: NextRequest) {
           user_name: user.user_metadata?.full_name || user.email,
           items: items,
           subtotal: subtotal,
+          shipping: shipping || 0,
           tax: 0,
           discount: discount || 0,
           discount_code: discountCode || null,

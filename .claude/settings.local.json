@@ -25,7 +25,12 @@
       "Bash(timeout /t 3)",
       "Bash(rd /s /q .next)",
       "Bash(del nul)",
-      "Bash(rm:*)"
+      "Bash(rm:*)",
+      "Bash(cmd /c taskkill /PID 41840 /F)",
+      "Bash(cmd /c taskkill /PID 39716 /F)",
+      "Bash(cmd //c \"taskkill //PID 50408 //F && taskkill //PID 41840 //F && taskkill //PID 39716 //F\")",
+      "Bash(powershell -Command:*)",
+      "Bash(git clean:*)"
     ]
   }
 }

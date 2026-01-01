@@ -16,6 +16,10 @@ import styles from './page.module.css';
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
+// Shipping constants
+const FREE_SHIPPING_THRESHOLD = parseFloat(process.env.NEXT_PUBLIC_FREE_SHIPPING_THRESHOLD || '49');
+const SHIPPING_FEE = parseFloat(process.env.NEXT_PUBLIC_SHIPPING_FEE || '2.95');
+
 interface CheckoutFormProps {
   paymentIntentId: string;
 }
@@ -108,8 +112,9 @@ function CheckoutForm({ paymentIntentId }: CheckoutFormProps) {
   };
 
   const subtotal = getCartTotal();
+  const shippingCost = subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_FEE;
   const discountAmount = appliedDiscount ? appliedDiscount.amount : 0;
-  const total = subtotal - discountAmount;
+  const total = subtotal + shippingCost - discountAmount;
 
   const handleApplyDiscount = async () => {
     setDiscountError(null);
@@ -127,6 +132,7 @@ function CheckoutForm({ paymentIntentId }: CheckoutFormProps) {
           body: JSON.stringify({
             paymentIntentId,
             subtotal,
+            shipping: shippingCost,
             discount,
             discountCode: code,
           }),
@@ -162,6 +168,7 @@ function CheckoutForm({ paymentIntentId }: CheckoutFormProps) {
         body: JSON.stringify({
           paymentIntentId,
           subtotal,
+          shipping: shippingCost,
           discount: 0,
           discountCode: null,
         }),
@@ -207,8 +214,13 @@ function CheckoutForm({ paymentIntentId }: CheckoutFormProps) {
             </div>
             <div className={styles.summaryRow}>
               <span>Shipping:</span>
-              <span>Free</span>
+              <span>{shippingCost === 0 ? 'Free' : `£${shippingCost.toFixed(2)}`}</span>
             </div>
+            {shippingCost > 0 && subtotal < FREE_SHIPPING_THRESHOLD && (
+              <div className={styles.summaryRow} style={{ fontSize: '0.875rem', color: '#666' }}>
+                <span colSpan={2}>Add £{(FREE_SHIPPING_THRESHOLD - subtotal).toFixed(2)} more for free shipping!</span>
+              </div>
+            )}
             {appliedDiscount && (
               <div className={styles.summaryRow} style={{ color: '#22c55e' }}>
                 <span>Discount ({appliedDiscount.code}):</span>
@@ -347,7 +359,8 @@ export default function CheckoutPage() {
 
       try {
         const subtotal = getCartTotal();
-        const total = subtotal; // Initial payment intent has no discount
+        const shipping = subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_FEE;
+        const total = subtotal + shipping; // Initial payment intent has no discount
 
         const orderItems = cart.map((item) => ({
           product_id: item.id,
@@ -363,6 +376,7 @@ export default function CheckoutPage() {
           body: JSON.stringify({
             items: orderItems,
             subtotal,
+            shipping,
             discount: 0,
             discountCode: null,
             total,

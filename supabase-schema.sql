@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS orders (
   user_name TEXT NOT NULL,
   items JSONB NOT NULL,
   subtotal DECIMAL(10, 2) NOT NULL,
+  shipping DECIMAL(10, 2) DEFAULT 0,
   tax DECIMAL(10, 2) NOT NULL,
   discount DECIMAL(10, 2) DEFAULT 0,
   discount_code TEXT,
@@ -16,6 +17,15 @@ CREATE TABLE IF NOT EXISTS orders (
   status TEXT DEFAULT 'pending' CHECK (status IN ('pending', 'paid', 'processing', 'completed', 'cancelled')),
   stripe_session_id TEXT,
   stripe_payment_intent TEXT,
+  payment_intent_id TEXT,
+  stripe_payment_status TEXT,
+  shipping_name TEXT,
+  shipping_address_line1 TEXT,
+  shipping_address_line2 TEXT,
+  shipping_city TEXT,
+  shipping_county TEXT,
+  shipping_postcode TEXT,
+  shipping_country TEXT,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc', NOW()),
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc', NOW())
 );
