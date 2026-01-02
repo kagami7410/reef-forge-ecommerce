@@ -116,7 +116,7 @@
 }
 
 .stockBadge {
-  padding: 1rem;
+  padding: .2rem;
   background: rgba(76, 175, 80, 0.2);
   color: #4CAF50;
   border-radius: 50px;
@@ -134,6 +134,8 @@
   display: flex;
   gap: 1rem;
   animation: fadeInUp 0.6s ease-out 0.5s backwards;
+  position: relative;
+  z-index: 10;
 }
 
 .primaryButton {
@@ -189,7 +191,14 @@
   transform: translateY(-3px);
 }
 
+.heroImageMobile {
+
+  height: 0;
+  opacity: 0;
+}
+
 .heroImage {
+  
   display: flex;
   align-items: center;
   justify-content: center;
@@ -203,7 +212,6 @@
   aspect-ratio: 1;
   background: linear-gradient(135deg, #f5f7fa 0%, #e8eef5 100%);
   border-radius: 20px;
-  padding: 2rem;
 }
 
 /* Animated Border Box */
@@ -211,7 +219,7 @@
   content: '';
   position: absolute;
   inset: -8px;
-  padding: 8px;
+  padding: 9px;
   background: linear-gradient(
     90deg,
     #667eea,
@@ -335,9 +343,21 @@
 /* Responsive Design */
 @media (max-width: 968px) {
   .heroContent {
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
     gap: 3rem;
-    padding: 3rem 2rem;
+    padding: 3rem 1rem;
+  }
+
+  .heroText {
+    order: 1;
+  }
+
+  .heroImage {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    order: 2;
   }
 
   .heroTitle {
@@ -363,13 +383,39 @@
   }
 
   .imageWrapper {
-    max-width: 350px;
+    max-width: 450px;
   }
 }
 
 @media (max-width: 640px) {
   .heroContent {
+    display: flex;
+    flex-direction: column;
     padding: 2rem 1.5rem;
+  }
+
+  .heroText {
+    order: 1;
+  }
+
+  .heroImage {
+    opacity: 0;
+    height: 0;
+    order: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeInRight 0s ease-out 0s backwards;
+  }
+  .heroImageMobile {
+    opacity: 1;
+    height: auto;
+    order: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2rem;
+    animation: fadeInRight 0.8s ease-out 0.3s backwards;
   }
 
   .heroTitle {

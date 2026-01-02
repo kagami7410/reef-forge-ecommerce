@@ -17,7 +17,20 @@ export default function Home() {
             <h1 className={styles.heroTitle}>Rock-Solid Magnetic Frag Holder</h1>
             <p className={styles.heroDescription}>- Never worry about slipping or shifting corals.</p>
 
-            <div className={styles.heroFeatures}>
+          <div className={styles.heroImageMobile}>
+            <div className={styles.imageWrapper}>
+              <div className={styles.imageGlow}></div>
+              <img
+                src={featuredProduct.image}
+                alt={featuredProduct.name}
+                className={styles.productImage}
+              />
+            </div>
+          </div>
+
+
+          <div className='flex sm:flex-col '>
+            <div className={`${styles.heroFeatures} flex-1 content-center`}>
               <div className={styles.feature}>
                 <svg className={styles.featureIcon} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -38,11 +51,16 @@ export default function Home() {
               </div>
             </div>
 
-            <div className={`${styles.heroPricing}`}>
+            <div className={`${styles.heroPricing} flex-1 items-center sm:items-start`}>
               <p className=''>Starting price from:</p>
               <span className={styles.heroPrice}>£25.99</span>
               <span className={styles.stockBadge}>{featuredProduct.stock} in stock</span>
             </div>
+
+
+          </div>
+            
+
 
             <div className={styles.heroButtons}>
               <Link href={`/products/${featuredProduct.id}`} className={styles.primaryButton}>
