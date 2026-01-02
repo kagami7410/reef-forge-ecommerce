@@ -1,0 +1,362 @@
+.container {
+  min-height: 100vh;
+  padding: 2rem 1rem;
+  background: linear-gradient(to bottom, #f8fafc, #ffffff);
+}
+
+.content {
+  max-width: 900px;
+  margin: 0 auto;
+  background: white;
+  padding: 3rem 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #1a1a1a;
+  text-align: center;
+}
+
+.intro {
+  font-size: 1.125rem;
+  line-height: 1.8;
+  color: #555;
+  text-align: center;
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.section {
+  margin-bottom: 3rem;
+}
+
+.iconHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.icon {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.section h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #2c3e50;
+  margin: 0;
+}
+
+.section p {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #4a5568;
+  margin-bottom: 1rem;
+}
+
+.list {
+  margin: 1rem 0;
+  padding-left: 1.5rem;
+}
+
+.list li {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #4a5568;
+  margin-bottom: 0.75rem;
+}
+
+.list li strong {
+  color: #1f2937;
+  font-weight: 600;
+}
+
+/* Note Box */
+.noteBox {
+  background: #f0f9ff;
+  padding: 1.25rem;
+  border-radius: 8px;
+  margin-top: 1.5rem;
+  border-left: 4px solid #3b82f6;
+}
+
+.noteBox p {
+  margin: 0;
+  color: #1e40af;
+  font-size: 0.95rem;
+}
+
+/* Steps Container */
+.stepsContainer {
+  margin: 2rem 0;
+}
+
+.step {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  padding: 1.5rem;
+  background: #f9fafb;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+}
+
+.stepNumber {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.25rem;
+}
+
+.stepContent h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0 0 0.5rem 0;
+}
+
+.stepContent p {
+  margin: 0;
+  color: #4b5563;
+  font-size: 0.95rem;
+}
+
+.stepContent strong {
+  color: #1f2937;
+}
+
+/* Warning Box */
+.warningBox {
+  background: #fef2f2;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-top: 1.5rem;
+  border-left: 4px solid #ef4444;
+}
+
+.warningHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.warningIcon {
+  font-size: 1.5rem;
+}
+
+.warningHeader strong {
+  color: #991b1b;
+  font-size: 1.125rem;
+}
+
+.warningBox p {
+  margin: 0;
+  color: #991b1b;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* Requirement Box */
+.requirementBox {
+  margin: 1.5rem 0;
+}
+
+.requirement {
+  display: flex;
+  gap: 1.25rem;
+  padding: 1.5rem;
+  background: #fefce8;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  border-left: 4px solid #eab308;
+}
+
+.requirementIcon {
+  font-size: 1.75rem;
+  flex-shrink: 0;
+}
+
+.requirement h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #713f12;
+  margin: 0 0 0.5rem 0;
+}
+
+.requirement p {
+  margin: 0;
+  color: #713f12;
+  font-size: 0.95rem;
+}
+
+.requirement strong {
+  font-weight: 700;
+}
+
+/* Contact Section */
+.contactSection {
+  background: #f0fdf4;
+  padding: 2rem;
+  border-radius: 8px;
+  border-left: 4px solid #22c55e;
+}
+
+.contactBox {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin: 1rem 0;
+  border: 1px solid #bbf7d0;
+}
+
+.contactInfo {
+  font-size: 1.125rem;
+  color: #166534;
+  margin-bottom: 1.25rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #dcfce7;
+}
+
+.contactDetails p {
+  margin-bottom: 0.5rem;
+  color: #166534;
+  font-weight: 600;
+}
+
+.contactDetails ul {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  margin: 0.5rem 0 0 0;
+}
+
+.contactDetails li {
+  color: #166534;
+  margin-bottom: 0.25rem;
+  font-size: 0.95rem;
+}
+
+.responseNote {
+  font-size: 0.9rem;
+  color: #15803d;
+  font-style: italic;
+  margin-top: 1rem;
+}
+
+/* Last Updated */
+.lastUpdated {
+  text-align: center;
+  padding: 1.5rem;
+  background: #f3f4f6;
+  border-radius: 8px;
+  color: #6b7280;
+  font-size: 0.9rem;
+  margin-top: 2rem;
+}
+
+.lastUpdated strong {
+  color: #374151;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem 0.5rem;
+  }
+
+  .content {
+    padding: 2rem 1.5rem;
+    border-radius: 8px;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .intro {
+    font-size: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .section h2 {
+    font-size: 1.25rem;
+  }
+
+  .iconHeader {
+    gap: 0.5rem;
+  }
+
+  .icon {
+    font-size: 1.5rem;
+  }
+
+  .step {
+    gap: 1rem;
+    padding: 1.25rem;
+  }
+
+  .stepNumber {
+    width: 35px;
+    height: 35px;
+    font-size: 1.125rem;
+  }
+
+  .stepContent h3 {
+    font-size: 1rem;
+  }
+
+  .requirement {
+    gap: 1rem;
+    padding: 1.25rem;
+  }
+
+  .requirementIcon {
+    font-size: 1.5rem;
+  }
+
+  .requirement h3 {
+    font-size: 1rem;
+  }
+
+  .contactSection {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .content {
+    padding: 1.5rem 1rem;
+  }
+
+  .title {
+    font-size: 1.75rem;
+  }
+
+  .step,
+  .requirement,
+  .warningBox,
+  .noteBox,
+  .contactBox {
+    padding: 1rem;
+  }
+
+  .stepNumber {
+    width: 30px;
+    height: 30px;
+    font-size: 1rem;
+  }
+}

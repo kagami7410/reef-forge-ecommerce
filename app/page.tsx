@@ -92,7 +92,7 @@ export default function Home() {
                 </svg>
               </div>
               <h3>Premium Quality</h3>
-              <p> Heavy-Duty Magnets IncludedAttach securely to glass up to 18mm thick—no slipping, no worries! Quality Magnets: N52 Neodymium magnets (2 pairs)Tested: String & Steady hold on Glass thickness up to 3/4" inch!Double magnets giving strong and sturdy hold up to 10kg! Reef safe PETG plastic used for material which is both durable and long-lasting in reef environment</p>
+              <p> Heavy-Duty Magnets IncludedAttach securely to glass up to 18mm thick—no slipping, no worries! Quality Magnets: N52 Neodymium magnets (2 pairs)Tested: String & Steady hold on Glass thickness up to 3/4" inch!Double magnets giving strong and sturdy hold up to 10kg! Reef safe PETG plastic used for material which is both durable and long-lasting in reef environment.</p>
             </div>
 
             <div className={styles.detailCard}>
@@ -102,7 +102,7 @@ export default function Home() {
                 </svg>
               </div>
               <h3>Advanced Features</h3>
-              <p> Innovative Honeycomb DesignMaximize coral placement with full usability of all frag holes!Holding up to 45frag plugs!Designed to minimize shadowing and boost upward flow, perfect for SPS, LPS coral growth</p>
+              <p> Innovative Honeycomb DesignMaximize coral placement with full usability of all frag holes!Holding up to 45frag plugs!Designed to minimize shadowing and boost upward flow, perfect for SPS, LPS coral growth.</p>
             </div>
 
             {/* <div className={styles.detailCard}>

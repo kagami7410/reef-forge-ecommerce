@@ -80,7 +80,19 @@ export const products: Product[] = [
     id: 1,
     name: "Magnetic Frag Rack [Extra Large]",
     price: 34.99,
-    description: "High-quality wireless headphones with noise cancellation",
+    description: `📏 Size: 430mm × 60mm
+
+🔷 Innovative Honeycomb Design
+Maximize coral placement with full usability of all frag holes! Holding up to 45 standard frag plugs! Designed to minimize shadowing and boost upward flow, perfect for SPS and LPS coral growth.
+
+✅ Heavy-Duty Magnets Included
+• Attach securely to glass up to 18mm thick—no slipping, no worries!
+• Magnets: N52 Neodymium magnets (2 pairs)
+• Tested: Strong & steady hold on glass thickness up to 3/4 inch
+• Double magnets provide sturdy hold up to 10kg!
+
+🌊 Stylish, Durable, and Functional
+Reefin3D frag racks combine aesthetics with performance to give your tank a professional edge. Reef-safe PETG plastic used for material.`,
     category: "Frag Rack",
     image: getImageUrl(productImageData.magnetic_tray_extraLarge.main),
     images: productImageData.magnetic_tray_extraLarge.gallery.map(img => getImageUrl(img)),
@@ -90,7 +102,19 @@ export const products: Product[] = [
     id: 2,
     name: "Magnetic Frag Rack [Large]",
     price: 29.99,
-    description: "Feature-rich smartwatch with fitness tracking",
+    description: `📏 Size: 300mm × 60mm
+
+🔷 Innovative Honeycomb Design
+Maximize coral placement with full usability of all frag holes! Holding up to 32 standard frag plugs! Designed to minimize shadowing and boost upward flow, perfect for SPS and LPS coral growth.
+
+✅ Heavy-Duty Magnets Included
+• Attach securely to glass up to 18mm thick—no slipping, no worries!
+• Magnets: N52 Neodymium magnets (2 pairs)
+• Tested: Strong & steady hold on glass thickness up to 3/4 inch
+• Double magnets provide sturdy hold up to 10kg!
+
+🌊 Stylish, Durable, and Functional
+Reefin3D frag racks combine aesthetics with performance to give your tank a professional edge. Reef-safe PETG plastic used for material.`,
     category: "Frag Rack",
     image: getImageUrl(productImageData.magnetic_tray_large.main),
     images: productImageData.magnetic_tray_large.gallery.map(img => getImageUrl(img)),
@@ -100,23 +124,35 @@ export const products: Product[] = [
     id: 3,
     name: "Magnetic Frag Rack [Standard]",
     price: 25.99,
-    description: "Durable backpack with laptop compartment",
+    description: `📏 Size: 215mm × 60mm
+
+🔷 Innovative Honeycomb Design
+Maximize coral placement with full usability of all frag holes! Holding up to 25 standard frag plugs! Designed to minimize shadowing and boost upward flow, perfect for SPS and LPS coral growth.
+
+✅ Heavy-Duty Magnets Included
+• Attach securely to glass up to 18mm thick—no slipping, no worries!
+• Magnets: N52 Neodymium magnets (2 pairs)
+• Tested: Strong & steady hold on glass thickness up to 3/4 inch
+• Double magnets provide sturdy hold up to 10kg!
+
+🌊 Stylish, Durable, and Functional
+Reefin3D frag racks combine aesthetics with performance to give your tank a professional edge. Reef-safe PETG plastic used for material.`,
     category: "Frag Rack",
     image: getImageUrl(productImageData.magnetic_tray_standard.main),
     images: productImageData.magnetic_tray_standard.gallery.map(img => getImageUrl(img)),
     stock: 10
-  },
-
-  {
-    id: 4,
-    name: "Magnetic Frag Rack [TEST]",
-    price: .10,
-    description: "Durable backpack with laptop compartment",
-    category: "TEST",
-    image: getImageUrl(productImageData.magnetic_tray_standard.main),
-    images: productImageData.magnetic_tray_standard.gallery.map(img => getImageUrl(img)),
-    stock: 10
   }
+
+  // {
+  //   id: 4,
+  //   name: "Magnetic Frag Rack [TEST]",
+  //   price: .10,
+  //   description: "Durable backpack with laptop compartment",
+  //   category: "TEST",
+  //   image: getImageUrl(productImageData.magnetic_tray_standard.main),
+  //   images: productImageData.magnetic_tray_standard.gallery.map(img => getImageUrl(img)),
+  //   stock: 10
+  // }
 ];
 
 export function getProductById(id: number): Product | undefined {
