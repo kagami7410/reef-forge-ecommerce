@@ -56,8 +56,6 @@ export default function ProductDetailPage() {
               ? `${product.stock} in stock`
               : 'Out of stock'}
           </p>
-          <p className={styles.description}>{product.description}</p>
-
           <button
             className={`${styles.addButton} ${isAdding ? styles.adding : ''}`}
             onClick={handleAddToCart}
@@ -65,6 +63,11 @@ export default function ProductDetailPage() {
           >
             {product.stock > 0 ? 'Add to Cart' : 'Out of Stock'}
           </button>
+          <h2 className='text-lg'>Description</h2>
+
+          <p className={styles.description}>{product.description}</p>
+
+
         </div>
       </div>
 
