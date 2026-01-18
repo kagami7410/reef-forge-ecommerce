@@ -53,7 +53,7 @@ export default function ProductDetailPage() {
           <p className={styles.price}> £{product.price.toFixed(2)}</p>
           <p className={styles.stock}>
             {product.stock > 0
-              ? `${product.stock} in stock`
+              ? `${product.stock} in stock`2
               : 'Out of stock'}
           </p>
           <button

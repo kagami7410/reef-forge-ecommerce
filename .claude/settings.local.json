@@ -30,7 +30,9 @@
       "Bash(cmd /c taskkill /PID 39716 /F)",
       "Bash(cmd //c \"taskkill //PID 50408 //F && taskkill //PID 41840 //F && taskkill //PID 39716 //F\")",
       "Bash(powershell -Command:*)",
-      "Bash(git clean:*)"
+      "Bash(git clean:*)",
+      "Bash(cmd /c taskkill /PID 27692 /F)",
+      "Bash(cmd /c taskkill /PID 20088 /F)"
     ]
   }
 }
